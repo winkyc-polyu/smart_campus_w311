@@ -18,11 +18,19 @@ def temp_data(request):
 
 def info(request):
     info = Sensor.objects.values('node_id', 'node_loc').annotate(
+<<<<<<< HEAD
         node_loc_upper=Upper('node_loc'), last_updated=Max('date_created')
         , max_temp=Max('temp'), min_temp=Min('temp'), avg_temp=Avg('temp')
+=======
+        node_loc_upper=Upper('node_loc'), max_temp=Max('temp'), min_temp=Min('temp'), avg_temp=(Avg('temp')), last_updated=Max('date_created')
+>>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
         , max_hum=Max('hum'), min_hum=Min('hum'), avg_hum=Avg('hum')
         , max_light=Max('light'), min_light=Min('light'), avg_light=Avg('light')
         , max_snd=Max('snd'), min_snd=Min('snd'), avg_snd=Avg('snd'),
         )
+<<<<<<< HEAD
+=======
+    print(info)
+>>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
     context = {'info' : info} # Store the data in "context" dictionaries
     return render(request, 'sensor/info.html', context) # Pass the context to HTML template
