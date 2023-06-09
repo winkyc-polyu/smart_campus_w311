@@ -7,7 +7,7 @@ def mqtt_on_message(client, userdata, msg):
     iotData = json.loads(d_msg)
     if iotData["id"] == ID:
         print("Received message on topic %s : %s" % (msg.topic, iotData))
-        p = Sensor(node_id=iotData["id"], node_loc=iotData["loc"], 
+        p = Sensor(node_id=iotData["node_id"], node_loc=iotData["loc"], 
             temp=iotData["temp"], hum=iotData["hum"], light=iotData["light"], snd=iotData["snd"])
         p.save()
 
