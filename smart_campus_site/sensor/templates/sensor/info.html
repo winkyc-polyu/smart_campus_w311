@@ -5,6 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-
 wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <title> Smart Campus Sensor W311a Info</title>
+
 </head>
 
 <body>
@@ -17,9 +18,9 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
                 <tr>
                 <th width="10%">Sensor ID</th>
                 <th width="10%">Location</th>
-                <th width="20%">max. Temperature</th>
-                <th width="20%">min. Temperature</th>
-                <th width="20%">avg. Temperature</th>
+                <th width="20%">MAX. Temperature</th>
+                <th width="20%">MIN. Temperature</th>
+                <th width="20%">AVG. Temperature</th>
                 <th width="20%">Last Updated</th>
             </tr>
         
@@ -55,7 +56,7 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
                 {% else %}
                     <td>
                 {% endif %}
-                {{ i.avg_temp }}</td>
+                {{ i.avg_temp|floatformat:2 }}</td>
 
                 <td>{{ i.last_updated }}</td>
 
@@ -74,9 +75,9 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
                 <tr>
                 <th width="10%">Sensor ID</th>
                 <th width="10%">Location</th>
-                <th width="20%">max. Humidity</th>
-                <th width="20%">min. Humidity</th>
-                <th width="20%">avg. Humidity</th>
+                <th width="20%">MAX. Humidity</th>
+                <th width="20%">MIN. Humidity</th>
+                <th width="20%">AVG. Humidity</th>
                 <th width="20%">Last Updated</th>
             </tr>
         
@@ -92,7 +93,7 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
            
                 <td>{{ i.min_hum }}</td>
 
-                <td>{{ i.avg_hum }}</td>
+                <td>{{ i.avg_hum|floatformat:2 }}</td>
 
                 <td>{{ i.last_updated }}</td>
 
@@ -111,9 +112,9 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
                 <tr>
                 <th width="10%">Sensor ID</th>
                 <th width="10%">Location</th>
-                <th width="20%">max. Light</th>
-                <th width="20%">min. Light</th>
-                <th width="20%">avg. Light</th>
+                <th width="20%">MAX. Light</th>
+                <th width="20%">MIN. Light</th>
+                <th width="20%">AVG. Light</th>
                 <th width="20%">Last Updated</th>
             </tr>
         
@@ -128,7 +129,7 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
 
                 <td>{{ i.min_light }}</td>
 
-                <td>{{ i.avg_light }}</td>
+                <td>{{ i.avg_light|floatformat:2 }}</td>
 
                 <td>{{ i.last_updated }}</td>
 
@@ -147,9 +148,9 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
                 <tr>
                 <th width="10%">Sensor ID</th>
                 <th width="10%">Location</th>
-                <th width="20%">max. Sound</th>
-                <th width="20%">min. Sound</th>
-                <th width="20%">avg. Sound</th>
+                <th width="20%">MAX. Sound</th>
+                <th width="20%">MIN. Sound</th>
+                <th width="20%">AVG. Sound</th>
                 <th width="20%">Last Updated</th>
             </tr>
         
@@ -164,7 +165,7 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
 
                 <td>{{ i.min_snd }}</td>
 
-                <td> {{ i.avg_snd }}</td>
+                <td> {{ i.avg_snd|floatformat:2 }}</td>
 
                 <td>{{ i.last_updated }}</td>
 
@@ -173,6 +174,7 @@ wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="a
 
         </tbody>
     </table>
+
 </body>
 
 </HTML>
