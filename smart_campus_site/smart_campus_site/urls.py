@@ -18,4 +18,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sensor/', include('sensor.urls')), #Inlcude app "sensor/urls.py"
 ]

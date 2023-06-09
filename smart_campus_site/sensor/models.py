@@ -1,6 +1,6 @@
 from django.db import models
 
-class sensor(models.Model):
+class Sensor(models.Model):
     
     node_id = models.CharField(max_length=3)
     node_loc = models.CharField(max_length=10)
