@@ -5,11 +5,11 @@ import json
 def mqtt_on_message(client, userdata, msg):
     d_msg = str(msg.payload.decode("utf-8"))
     iotData = json.loads(d_msg)
-    if iotData["node_id"] == ID:
-        print("Received message on topic %s : %s" % (msg.topic, iotData))
-        p = Sensor(node_id=iotData["node_id"], node_loc=iotData["loc"], 
-            temp=iotData["temp"], hum=iotData["hum"], light=iotData["light"], snd=iotData["snd"])
-        p.save()
+    #if iotData["node_id"] == ID:
+    print("Received message on topic %s : %s" % (msg.topic, iotData))
+    p = Sensor(node_id=iotData["node_id"], node_loc=iotData["loc"], 
+        temp=iotData["temp"], hum=iotData["hum"], light=iotData["light"], snd=iotData["snd"])
+    p.save()
 
 ID="A01" # Sensor ID
 mqtt_broker = "broker.hivemq.com" # Broker
