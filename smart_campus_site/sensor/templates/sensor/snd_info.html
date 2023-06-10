@@ -1,0 +1,57 @@
+<!doctype html>
+<HTML>
+
+<head>
+    {% include "navigation/header.html" %}
+    <title>Smart Campus in W311</title>
+</head>
+
+<body>
+    <!--
+    <h1 class="display-3 p-3 mb-2 bg-light text-dark">Smart Campus Sensor W311a Info</h1>
+    -->
+    <div class="container">
+        {% include "navigation/navbar.html" %}
+        <div style="height: 50px;"></div>
+        <table class="table table-striped table-hover">
+            <thead class="table-danger">
+                <tr>
+                    <th colspan="7" style="text-align:center; font-size:25px;">Sound</th>
+
+            </thead>
+            <tr>
+                <th width="10%">Sensor ID</th>
+                <th width="10%">Location</th>
+                <th width="20%">MAX. Sound</th>
+                <th width="20%">MIN. Sound</th>
+                <th width="20%">AVG. Sound</th>
+                <th width="20%">Last Updated</th>
+            </tr>
+
+            <tbody>
+
+                {% for i in info %}
+                <tr>
+                    <td>{{ i.node_id }}</td>
+                    <td>{{ i.node_loc }}</td>
+
+                    <td>{{ i.max_snd }}</td>
+
+                    <td>{{ i.min_snd }}</td>
+                    <td> {{ i.avg_snd|floatformat:2 }}</td>
+                    <td>{{ i.last_updated }}</td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    {% include "navigation/footer.html" %}
+    </tbody>
+    </table>
+
+</body>
+
+</HTML>
