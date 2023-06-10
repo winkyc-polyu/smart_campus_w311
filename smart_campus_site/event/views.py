@@ -27,8 +27,14 @@ def index(request):
             new_venue_event.create(venue, date, time_start, time_end, event, instructor)
             new_venue_event.save()
         venues = venue_event.objects.all()
-    for venue in venues:
-        print(venue.venue)
+    selection = {}
+    # for v in venues:
+    #     venue = v.venue
+    #     date = v.date
+    #     time = (v.time_start, v.time_end)
+    #     selection[venue] = [dic]
+    #     print(selection)
+
     selection = {
         "W311a": [{
             "2023-34-23": [("start", "end"),("start", "end")
