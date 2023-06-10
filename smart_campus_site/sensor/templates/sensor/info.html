@@ -30,51 +30,7 @@
 
             <tbody>
 
-<<<<<<< HEAD
                 {% for i in info %}
-=======
-                {% if i.max_temp > '29' %}
-                    <td style="color: red;">
-                {% elif i.max_temp < '21' %}
-                    <td style="color: blue;">
-                {% else %}
-                    <td>
-                {% endif %}
-                {{ i.max_temp }}</td>
-
-                {% if i.min_temp > '29' %}
-                    <td style="color: red;">
-                {% elif i.min_temp < '21' %}
-                    <td style="color: blue;">
-                {% else %}
-                    <td>
-                {% endif %}
-                {{ i.min_temp }}</td>
-
-                {% if i.avg_temp > '29' %}
-                    <td style="color: red;">
-                {% elif i.avg_temp < '21' %}
-                    <td style="color: blue;">
-                {% else %}
-                    <td>
-                {% endif %}
-                {{ i.avg_temp|floatformat:2 }}</td>
-
-                <td>{{ i.last_updated }}</td>
-
-            </tr>
-            {% endfor %}
-
-        </tbody>
-    </table>
-
-    <br>
-    <table class="table table-striped table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th colspan="7" style="text-align:center; font-size:25px;">Humidity</th>
-            </thead>
->>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
                 <tr>
                     <td>{{ i.node_id }}</td>
                     <td>{{ i.node_loc_upper }}</td>
@@ -101,7 +57,7 @@
                             {% else %}
                     <td>
                         {% endif %}
-                        {{ i.avg_temp }}</td>
+                        {{ i.avg_temp|floatformat:2 }}</td>
 
                     <td>{{ i.last_updated }}</td>
 
@@ -128,9 +84,9 @@
 
             <tbody>
 
-<<<<<<< HEAD
                 {% for i in info %}
-=======
+                <td>{{ i.node_id }}</td>
+                <td>{{ i.node_loc_upper }}</td>
               
                 <td>{{ i.max_hum }}</td>
            
@@ -151,32 +107,7 @@
         <thead class="table-warning">
             <tr>
                 <th colspan="7" style="text-align:center; font-size:25px;">Light</th>
-            </thead>
->>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
-                <tr>
-                    <td>{{ i.node_id }}</td>
-                    <td>{{ i.node_loc_upper }}</td>
-
-
-                    <td>{{ i.max_hum }}</td>
-
-                    <td>{{ i.min_hum }}</td>
-
-                    <td>{{ i.avg_hum }}</td>
-
-                    <td>{{ i.last_updated }}</td>
-
-                </tr>
-                {% endfor %}
-
-            </tbody>
-        </table>
-
-        <br>
-        <table class="table table-striped table-hover">
-            <thead class="table-warning">
-                <tr>
-                    <th colspan="7" style="text-align:center; font-size:25px;">Light</th>
+            
             </thead>
             <tr>
                 <th width="10%">Sensor ID</th>
@@ -189,9 +120,11 @@
 
             <tbody>
 
-<<<<<<< HEAD
                 {% for i in info %}
-=======
+                <td>{{ i.node_id }}</td>
+                <td>{{ i.node_loc_upper }}</td>
+              
+                <td>{{ i.max_light }}</td>
                 <td>{{ i.min_light }}</td>
 
                 <td>{{ i.avg_light|floatformat:2 }}</td>
@@ -209,31 +142,7 @@
         <thead class="table-danger">
             <tr>
                 <th colspan="7" style="text-align:center; font-size:25px;">Sound</th>
-            </thead>
->>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
-                <tr>
-                    <td>{{ i.node_id }}</td>
-                    <td>{{ i.node_loc_upper }}</td>
-
-                    <td>{{ i.max_light }}</td>
-
-                    <td>{{ i.min_light }}</td>
-
-                    <td>{{ i.avg_light }}</td>
-
-                    <td>{{ i.last_updated }}</td>
-
-                </tr>
-                {% endfor %}
-
-            </tbody>
-        </table>
-
-        <br>
-        <table class="table table-striped table-hover">
-            <thead class="table-danger">
-                <tr>
-                    <th colspan="7" style="text-align:center; font-size:25px;">Sound</th>
+           
             </thead>
             <tr>
                 <th width="10%">Sensor ID</th>
@@ -253,17 +162,10 @@
 
                     <td>{{ i.max_snd }}</td>
 
-<<<<<<< HEAD
                     <td>{{ i.min_snd }}</td>
-=======
-                <td> {{ i.avg_snd|floatformat:2 }}</td>
->>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
-
-                    <td> {{ i.avg_snd }}</td>
-
+                    <td> {{ i.avg_snd|floatformat:2 }}</td>
                     <td>{{ i.last_updated }}</td>
 
-<<<<<<< HEAD
                 </tr>
                 {% endfor %}
 
@@ -272,11 +174,9 @@
     </div>
 
     {% include "navigation/footer.html" %}
-=======
         </tbody>
     </table>
 
->>>>>>> effd83c5d28f121674e9e70a053d2c96e1beea2e
 </body>
 
 </HTML>
