@@ -4,55 +4,60 @@
 <head>
     {% include "navigation/header.html" %}
     <title>Smart Campus in W311</title>
+    <script>
+        window.setTimeout(function () { location.href = "hum_info"; }, 60000);
+    </script>
 </head>
 
 <body>
+
     <!--
     <h1 class="display-3 p-3 mb-2 bg-light text-dark">Smart Campus Sensor W311a Info</h1>
     -->
-    <div class="container">
-        {% include "navigation/navbar.html" %}
-        <div style="height: 50px;"></div>
-        <table class="table table-striped table-hover">
-            <thead class="table-primary">
+    <div style="background-color: #666666; height: 60px;">
+        <div class="container-lg">
+            {% include "navigation/navbar.html" %}
+
+            <div style="height: 50px;"></div>
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th colspan="7" style="text-align:center; font-size:25px;">Humidity</th>
+                </thead>
                 <tr>
-                    <th colspan="7" style="text-align:center; font-size:25px;">Humidity</th>
-            </thead>
-            <tr>
-                <th width="10%">Sensor ID</th>
-                <th width="15%">Location</th>
-                <th width="20%">MAX. Humidity</th>
-                <th width="20%">MIN. Humidity</th>
-                <th width="15%">AVG. Humidity</th>
-                <th width="20%">Last Updated</th>
-            </tr>
-
-            <tbody>
-
-                {% for i in info %}
-                <tr style="height: 50px;">
-                <td>{{ i.node_id }}</td>
-                <td>{{ i.node_loc }}</td>
-
-                <td>{{ i.max_hum }}</td>
-
-                <td>{{ i.min_hum }}</td>
-
-                <td>{{ i.avg_hum|floatformat:2 }}</td>
-
-                <td>{{ i.last_updated }}</td>
-
+                    <th width="10%">Sensor ID</th>
+                    <th width="15%">Location</th>
+                    <th width="20%">MAX. Humidity</th>
+                    <th width="20%">MIN. Humidity</th>
+                    <th width="15%">AVG. Humidity</th>
+                    <th width="20%">Last Updated</th>
                 </tr>
-                {% endfor %}
 
-            </tbody>
+                <tbody>
+
+                    {% for i in info %}
+                    <tr style="height: 50px;">
+                        <td>{{ i.node_id }}</td>
+                        <td>{{ i.node_loc }}</td>
+
+                        <td>{{ i.max_hum }}</td>
+
+                        <td>{{ i.min_hum }}</td>
+
+                        <td>{{ i.avg_hum|floatformat:2 }}</td>
+
+                        <td>{{ i.last_updated }}</td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        </tbody>
         </table>
     </div>
-
     {% include "navigation/footer.html" %}
-    </tbody>
-    </table>
-
 </body>
 
 </HTML>
