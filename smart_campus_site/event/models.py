@@ -1,10 +1,6 @@
 from django.db import models
 
-
-# Create your models here.
-
 class venue_event(models.Model):
-#Fields
     venue = models.CharField(max_length=10)
     date = models.DateField()
     time_start = models.TimeField()
@@ -12,7 +8,6 @@ class venue_event(models.Model):
     event = models.CharField(max_length=10)
     instructor = models.CharField(max_length=40)
     
-#Methods
     def __str__(self):
         return 'venue_event #{}'.format(self.id)
     class Meta:
@@ -24,4 +19,3 @@ class venue_event(models.Model):
         self.time_end =time_end
         self.event =event
         self.instructor = instructor
-

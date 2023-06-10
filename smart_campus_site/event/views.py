@@ -1,38 +1,55 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from .models import venue_event
-from .form import loc_form
+import os
+import json
+from django.conf import settings
 import pandas as pd
-from django.db.models import Avg,Max,Min
 import datetime
 
 #pip install django-import-export
 
-# Create your views here.
-
-def list(request):
-    entries = venue_event.objects.all()  
-    if len(entries)<1:
-        df = pd.read_excel(r'D:\TM1118\web\venue_data\Venue-Event (Group A).xlsx')
-        df.columns=df.iloc[0]
-        df=df.drop(0)
-        for rows in range(51):
+def index(request):
+    venues = venue_event.objects.all()
+    if len(venues) < 1:
+        df = pd.read_excel(os.path.join(settings.BASE_DIR, 'Venue-Event (Group A).xlsx'))
+        df = df.drop(0)
+        
+        for row in range(df.shape[0]):
             new_venue_event = venue_event()
-            venue = df.iloc[rows,0]
-            date = df.iloc[rows,1]
-            time_start = df.iloc[rows,2]
-            time_end = df.iloc[rows,3]
-            event = df.iloc[rows,4]
-            instructor = df.iloc[rows,5]
-            temp = {'venue':venue,'date':date,'time_start':time_start,'time_end':time_end,'event':event,'instructor':instructor}
-            new_venue_event.create(venue,date,time_start,time_end,event,instructor)
+
+            venue = df.iloc[row, 0]
+            date = df.iloc[row, 1]
+            time_start = df.iloc[row, 2]
+            time_end = df.iloc[row, 3]
+            event = df.iloc[row, 4]
+            instructor = df.iloc[row, 5]
+            
+            new_venue_event.create(venue, date, time_start, time_end, event, instructor)
             new_venue_event.save()
-    
-    #for i in loc_list:
-        #new_data = venue_event.objects.filter(node_loc= loc_list).aggregate(avg_temp = Avg("temp"), min_temp=Min("temp"), max_temp= Max("temp"), max_date_created= Max("date_created"))
-    #entries = {}
-    context = {'entries' : entries} # Store the data in "context" dictionaries
-    print(context)
-    return render(request, 'event/list.html', context) # Pass the context to HTML template
+        venues = venue_event.objects.all()
+    for venue in venues:
+        print(venue.venue)
+    selection = {
+        "W311a": [{
+            "2023-34-23": [("start", "end"),("start", "end")
+
+            ],
+            "2023-34-21": [("start", "end"),("start", "end")
+            ]
+        }],
+        "W311b": [{
+            "2023-34-23": [("start", "end"),("start", "end")
+
+            ],
+            "2023-34-21": [("start", "end"),("start", "end")
+            ]
+        }]
+    }
+
+    print(selection)
+
+    context = {'selection' : json.dumps(selection)}
+    return render(request, 'event/index.html', context)
 
 def form_input(request):
     if request.method == 'POST':
