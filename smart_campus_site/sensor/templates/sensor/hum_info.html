@@ -20,16 +20,17 @@
             </thead>
             <tr>
                 <th width="10%">Sensor ID</th>
-                <th width="10%">Location</th>
+                <th width="15%">Location</th>
                 <th width="20%">MAX. Humidity</th>
                 <th width="20%">MIN. Humidity</th>
-                <th width="20%">AVG. Humidity</th>
+                <th width="15%">AVG. Humidity</th>
                 <th width="20%">Last Updated</th>
             </tr>
 
             <tbody>
 
                 {% for i in info %}
+                <tr style="height: 50px;">
                 <td>{{ i.node_id }}</td>
                 <td>{{ i.node_loc }}</td>
 
