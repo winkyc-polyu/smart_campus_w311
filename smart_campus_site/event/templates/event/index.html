@@ -33,7 +33,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </fieldset>
             </form>
-            <table class="table table-dark">
+            <table class="table">
                 <thead>
                     <tr>
                         <td>Venue</td>
@@ -45,18 +45,6 @@
                     </tr>
                 </thead>
                 <tbody id="result">
-                    <!--
-            {% for event in selection %}
-            <tr>
-                <td>{{event.venue}}</td>
-                <td>{{event.date}}</td>
-                <td>{{event.time_start|date:'H:i A'}}</td>
-                <td>{{event.time_end|date:'H:i A'}}</td>
-                <td>{{event.event}}</td>
-                <td>{{event.instructor}}</td>
-            </tr>
-            {% endfor %}
-        -->
                 </tbody>
             </table>
         </div>
@@ -66,8 +54,11 @@
             $(document).ready(function () {
 
                 $("#venue").empty();
+                // $("#venue").append("<option value='all'>All</option>");
                 $("#date").empty();
+                // $("#date").append("<option value='all'>All</option>");
                 $("#time").empty();
+                // $("#time").append("<option value='all'>All</option>");
 
                 let selection = JSON.parse('{{ selection|escapejs }}');
                 venue_selected = Object.keys(selection)[0];
@@ -88,14 +79,9 @@
                 }
 
                 $("#venue").on("change", function (e) {
-                    console.log("venue change");
                     venue_selected = $("#venue").val();
                     date_selected = Object.keys(selection[venue_selected])[0];
                     time_selected = selection[venue_selected][date_selected][0];
-                    console.log("venue_selected: " + venue_selected);
-                    console.log("date_selected: " + date_selected);
-                    console.log("time_selected: " + time_selected);
-                    console.log("venue change");
 
                     $("#date").empty();
                     $("#time").empty();
@@ -111,12 +97,8 @@
                 });
 
                 $("#date").on("change", function (e) {
-                    console.log("date change");
                     date_selected = $("#date").val();
                     time_selected = selection[venue_selected][date_selected][0];
-                    console.log("date_selected: " + date_selected);
-                    console.log("time_selected: " + time_selected);
-                    console.log("date change");
 
                     $("#time").empty();
                     for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
@@ -127,7 +109,6 @@
 
                 $('#get-venue-data-form').on('submit', function (event) {
                     event.preventDefault();
-                    console.log("form submitted!");
                     getVenueData();
                 });
             });
@@ -147,11 +128,28 @@
                     },
 
                     success: function (json) {
-                        console.log(json);
-                        console.log("success");
+
                         $("#result").empty();
-                        for(let i = 0;i < json[0];i++) {
-                            console.log(i)
+
+                        let result = JSON.parse(json);
+                        for (let i = 0; i < result.length; i++) {
+                            venue = result[i].fields.venue;
+                            date = result[i].fields.date;
+                            time_start = result[i].fields.time_start;
+                            time_end = result[i].fields.time_end;
+                            event = result[i].fields.event;
+                            instructor = result[i].fields.instructor;
+
+                            $("#result").append("<tr>");
+
+                            $("#result").append(`<td>${venue}</td>`);
+                            $("#result").append(`<td>${date}</td>`);
+                            $("#result").append(`<td>${time_start}</td>`);
+                            $("#result").append(`<td>${time_end}</td>`);
+                            $("#result").append(`<td>${event}</td>`);
+                            $("#result").append(`<td>${instructor}</td>`);
+
+                            $("#result").append("</tr>");
                         }
                     },
 
