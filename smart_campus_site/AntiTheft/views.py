@@ -18,12 +18,13 @@ def index(request):
     return render(request, 'AntiTheft/index.html', context) # Pass the context to HTML template
 
 def publish_on_off(request):
-    # Get current state from form data
-    state = request.POST.get('state')
-    
-    mqtt_payload = {"state": state}
-    mqtt_topic = "OnOFF"
-    
-    # Publish message to MQTT broker
-    publish.single(mqtt_topic, payload=json.dumps(mqtt_payload), hostname="broker.hivemq.com")
+    for i in range(10):
+        # Get current state from form data
+        state = request.POST.get('state')
+        
+        mqtt_payload = {"state": state}
+        mqtt_topic = "OnOFF"
+        
+        # Publish message to MQTT broker
+        publish.single(mqtt_topic, payload=json.dumps(mqtt_payload), hostname="broker.hivemq.com")
     return HttpResponse(status=204)

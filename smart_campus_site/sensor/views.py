@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
 from sensor.models import Sensor
-from django.db.models.functions import Upper
-from django.db.models import Count, Max, Min, Avg
+from django.db.models import Max, Min, Avg
 from . import sensor_mqtt
 
 

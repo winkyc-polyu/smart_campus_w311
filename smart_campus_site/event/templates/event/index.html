@@ -137,6 +137,7 @@
                         $("#result").empty();
 
                         let result = JSON.parse(json);
+                        console.log(result)
                         for (let i = 0; i < result.length; i++) {
                             venue = result[i].fields.venue;
                             date = result[i].fields.date;
@@ -144,6 +145,7 @@
                             time_end = result[i].fields.time_end;
                             event = result[i].fields.event;
                             instructor = result[i].fields.instructor;
+
                             temp = result[i].fields.avg_temp;
                             hum = result[i].fields.avg_hum;
                             light = result[i].fields.avg_light;
@@ -156,10 +158,19 @@
                             $("#result").append(`<td>${time_end}</td>`);
                             $("#result").append(`<td>${event}</td>`);
                             $("#result").append(`<td>${instructor}</td>`);
-                            $("#result").append(`<td>${temp} C</td>`);
-                            $("#result").append(`<td>${hum} %</td>`);
-                            $("#result").append(`<td>${light} lm</td>`);
-                            $("#result").append(`<td>${snd} dB</td>`);
+                            
+                            console.log(typeof(temp));
+                            if (temp === undefined) {
+                                $("#result").append("<td>No record</td>");
+                                $("#result").append("<td>No record</td>");
+                                $("#result").append("<td>No record</td>");
+                                $("#result").append("<td>No record</td>");
+                            } else {
+                                $("#result").append(`<td>${temp} C</td>`);
+                                $("#result").append(`<td>${hum} %</td>`);
+                                $("#result").append(`<td>${light} lm</td>`);
+                                $("#result").append(`<td>${snd} dB</td>`);
+                            }
                             $("#result").append("</tr>");
                         }
                     },
