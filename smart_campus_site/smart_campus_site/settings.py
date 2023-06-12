@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'sensor',
     'event',
     'navigation',
+    'AntiTheft',
 ]
 
 MIDDLEWARE = [

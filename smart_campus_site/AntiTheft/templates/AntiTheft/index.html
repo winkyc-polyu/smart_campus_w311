@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "navigation/header.html" %}
+
+    <style type="text/css">
+        /* Style the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the header bar */
+        .header {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            background-color: #333;
+        }
+
+        h1.header-title {
+            color: white;
+            font-size: 24px;
+            margin-top: auto;
+            margin-bottom: auto
+        }
+
+
+        /* Center container on screen */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style heading and buttons */
+        h1,
+        button {
+            font-size: 24px;
+            color: white;
+            border-radius: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer
+        }
+
+        h1 {
+            margin-bottom: -10px;
+        }
+
+        button[value='on'] {
+            background-color: #4CAF50;
+        }
+
+        button[value='off'] {
+            background-color: #f44336;
+        }
+    </style>
+    
+    <title>Smart Campus in W311</title>
+</head>
+
+<body>
+    <div style="background-color: #666666; height: 60px;">
+        <div class="container-lg">
+            {% include "navigation/navbar.html" %}
+            <div style="height: 30px;"></div>
+        </div>
+    </div>
+
+
+    <!-- Parent div for container and warning message -->
+    <div style="display:flex;justify-content:center;flex-direction:column;height:100vh;align-items:center;">
+
+        <!-- Display device status message -->
+        <div class="container">
+            <h2 style="font-size:48px;margin-bottom:-10px;">Now room protection system is {{onoff}}</h2>
+        </div>
+
+        <!-- Show warning message if Breaking variable has True value -->
+        {% if Breaking == "True" %}
+        <h3 style="color:red;text-align:center;margin-top:20px;margin-bottom:-10px;">
+            The room is in danger, someone might break into the room!!!
+        </h3>
+        {% endif %}
+
+
+        <!-- Form to turn On/Off -->
+        <div style="display:flex;justify-content:center;margin-top:30px;">
+            <form method="post" action="{% url 'onoff' %}">
+                {% csrf_token %}
+                <button type="submit" name="state" value="on">ON</button>
+                <button type="submit" name="state" value="off">OFF</button>
+            </form>
+        </div>
+    </div>
+
+    {% include "navigation/footer.html" %}
+
+    <!-- Reload page every two seconds -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setInterval(function () {
+                location.reload();
+            }, 1000);
+        });
+    </script>
+
+</body>
+
+</html>

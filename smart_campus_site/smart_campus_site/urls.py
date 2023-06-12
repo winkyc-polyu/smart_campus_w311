@@ -21,4 +21,5 @@ urlpatterns = [
     path('sensor/', include('sensor.urls')),
     path('', include('sensor.urls')),
     path('event/', include('event.urls')),
+    path('anti-theft/', include('AntiTheft.urls')),
 ]
