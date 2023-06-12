@@ -7,106 +7,45 @@
 
 <body>
     <div style="background-color: #666666; height: 60px;">
-    <div class="container">
-        {% include "navigation/navbar.html" %}
-        <div style="height: 30px;"></div>
+        <div class="container">
+            {% include "navigation/navbar.html" %}
+            <div style="height: 30px;"></div>
 
-        <form>
-            <fieldset>
-                <legend>Get venue data</legend>
-                <div class="mb-3 w-50">
-                    <label for="venue" class="form-label">Venue</label>
-                    <select id="venue" class="form-select" required>
-                        <option>Disabled select</option>
-                    </select>
-                </div>
-                <div class="mb-3 w-50">
-                    <label for="date" class="form-label">Date</label>
-                    <select id="date" class="form-select" required>
-                    </select>
-                </div>
-                <div class="mb-3 w-50">
-                    <label for="time" class="form-label">Time</label>
-                    <select id="time" class="form-select" required>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </fieldset>
-        </form>
-        <script>
-            var my_dict = JSON.parse('{{ selection|escapejs }}');
-            console.log(my_dict)
-        </script>
-
-
-
-        <form action="test" method="post">
-            {% csrf_token %}
-            <select name="location">
-                <option value="W311a">W311a</option>
-                <option value="W311b">W311b</option>
-                <option value="W311-H1">W311-H1</option>
-                <option value="W311-H2">W311-H2</option>
-                <option value="W311-H3">W311-H3</option>
-                <option value="W311d-Z1">W311d-Z1</option>
-                <option value="W311d-Z2">W311d-Z2</option>
-            </select>
-            <select name="date">
-                <option value="9">9/6</option>
-                <option value="10">10/6</option>
-                <option value="11">11/6</option>
-                <option value="12">12/6</option>
-                <option value="13">13/6</option>
-                <option value="14">14/6</option>
-
-            </select>
-            <select name="start">
-                <option value="8">8:00</option>
-                <option value="9">9:00</option>
-                <option value="10">10:00</option>
-                <option value="11">11:00</option>
-                <option value="12">12:00</option>
-                <option value="13">13:00</option>
-                <option value="14">14:00</option>
-                <option value="15">15:00</option>
-                <option value="16">16:00</option>
-                <option value="17">17:00</option>
-                <option value="18">18:00</option>
-                <option value="19">19:00</option>
-                <option value="20">20:00</option>
-            </select>
-            <select name="end">
-                <option value="8">8:00</option>
-                <option value="9">9:00</option>
-                <option value="10">10:00</option>
-                <option value="11">11:00</option>
-                <option value="12">12:00</option>
-                <option value="13">13:00</option>
-                <option value="14">14:00</option>
-                <option value="15">15:00</option>
-                <option value="16">16:00</option>
-                <option value="17">17:00</option>
-                <option value="18">18:00</option>
-                <option value="19">19:00</option>
-                <option value="20">20:00</option>
-            </select>
-            {{ form.as_select}}
-            <input type="submit" value="Submit">
-        </form>
-
-        <table class="table table-dark">
-            <thead class="table-dark">
-                <tr>
-                    <td>venue</td>
-                    <td>date</td>
-                    <td>time start</td>
-                    <td>time end</td>
-                    <td>event</td>
-                    <td>instructor</td>
-                </tr>
-            </thead>
-            <thead class="table-dark"></thead>
-            <!--
+            <form id="get-venue-data-form" method="GET" action="/getVenueData">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Get venue data</legend>
+                    <div class="mb-3 w-50">
+                        <label for="venue" class="form-label">Venue</label>
+                        <select id="venue" class="form-select" required>
+                        </select>
+                    </div>
+                    <div class="mb-3 w-50">
+                        <label for="date" class="form-label">Date</label>
+                        <select id="date" class="form-select" required>
+                        </select>
+                    </div>
+                    <div class="mb-3 w-50">
+                        <label for="time" class="form-label">Time</label>
+                        <select id="time" class="form-select" required>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </fieldset>
+            </form>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <td>Venue</td>
+                        <td>Date</td>
+                        <td>Start</td>
+                        <td>End</td>
+                        <td>Event</td>
+                        <td>Instructor</td>
+                    </tr>
+                </thead>
+                <tbody id="result">
+                    <!--
             {% for event in selection %}
             <tr>
                 <td>{{event.venue}}</td>
@@ -118,10 +57,110 @@
             </tr>
             {% endfor %}
         -->
-            </thead>
-        </table>
-    </div>
-    {% include "navigation/footer.html" %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include "navigation/footer.html" %}
+        <script>
+            $(document).ready(function () {
+
+                $("#venue").empty();
+                $("#date").empty();
+                $("#time").empty();
+
+                let selection = JSON.parse('{{ selection|escapejs }}');
+                venue_selected = Object.keys(selection)[0];
+                date_selected = Object.keys(selection[venue_selected])[0];
+                time_selected = selection[venue_selected][date_selected][0];
+
+                for (let v in selection) {
+                    $("#venue").append(`<option value="${v}">${v}</option>`);
+                }
+
+                for (let d in selection[venue_selected]) {
+                    $("#date").append(`<option value="${d}">${d}</option>`);
+                }
+
+                for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
+                    t = selection[venue_selected][date_selected][i]
+                    $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                }
+
+                $("#venue").on("change", function (e) {
+                    console.log("venue change");
+                    venue_selected = $("#venue").val();
+                    date_selected = Object.keys(selection[venue_selected])[0];
+                    time_selected = selection[venue_selected][date_selected][0];
+                    console.log("venue_selected: " + venue_selected);
+                    console.log("date_selected: " + date_selected);
+                    console.log("time_selected: " + time_selected);
+                    console.log("venue change");
+
+                    $("#date").empty();
+                    $("#time").empty();
+
+                    for (let d in selection[venue_selected]) {
+                        $("#date").append(`<option value="${d}">${d}</option>`);
+                    }
+
+                    for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
+                        t = selection[venue_selected][date_selected][i]
+                        $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                    }
+                });
+
+                $("#date").on("change", function (e) {
+                    console.log("date change");
+                    date_selected = $("#date").val();
+                    time_selected = selection[venue_selected][date_selected][0];
+                    console.log("date_selected: " + date_selected);
+                    console.log("time_selected: " + time_selected);
+                    console.log("date change");
+
+                    $("#time").empty();
+                    for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
+                        t = selection[venue_selected][date_selected][i]
+                        $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                    }
+                });
+
+                $('#get-venue-data-form').on('submit', function (event) {
+                    event.preventDefault();
+                    console.log("form submitted!");
+                    getVenueData();
+                });
+            });
+
+            function convertTime(arr) {
+                return arr[0] + " - " + arr[1];
+            }
+
+            function getVenueData() {
+                $.ajax({
+                    url: "getVenueData",
+                    type: "GET",
+                    data: {
+                        venue: $('#venue').val(),
+                        date: $('#date').val(),
+                        time: $('#time').val()
+                    },
+
+                    success: function (json) {
+                        console.log(json);
+                        console.log("success");
+                        $("#result").empty();
+                        for(let i = 0;i < json[0];i++) {
+                            console.log(i)
+                        }
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            };
+        </script>
 </body>
 
 </HTML>
