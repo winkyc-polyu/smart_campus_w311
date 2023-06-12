@@ -5,6 +5,8 @@ import json
 from django.conf import settings
 import pandas as pd
 import datetime
+from django.http import HttpResponse, JsonResponse
+from django.core import serializers
 
 #pip install django-import-export
 
@@ -27,48 +29,54 @@ def index(request):
             new_venue_event.create(venue, date, time_start, time_end, event, instructor)
             new_venue_event.save()
         venues = venue_event.objects.all()
+
     selection = {}
-    # for v in venues:
-    #     venue = v.venue
-    #     date = v.date
-    #     time = (v.time_start, v.time_end)
-    #     selection[venue] = [dic]
-    #     print(selection)
+    for v in venues:
+        venue = v.venue
+        date = str(v.date)
+        time = (str(v.time_start), str(v.time_end))
 
-    selection = {
-        "W311a": [{
-            "2023-34-23": [("start", "end"),("start", "end")
+        if venue in selection:
+            if date not in selection[venue]:
+                selection[venue][date] = []
+            selection[venue][date].append(time)
+        else:
+            selection[venue] = {}
+            selection[venue][date] = []
+            selection[venue][date].append(time)
 
-            ],
-            "2023-34-21": [("start", "end"),("start", "end")
-            ]
-        }],
-        "W311b": [{
-            "2023-34-23": [("start", "end"),("start", "end")
+    # selection = {
+    #     "W311a": {
+    #         "2023-34-23": [("start", "end"),("start", "end")
 
-            ],
-            "2023-34-21": [("start", "end"),("start", "end")
-            ]
-        }]
-    }
+    #         ],
+    #         "2023-34-21": [("start", "end"),("start", "end")
+    #         ]
+    #     },
+    #     "W311b": {
+    #         "2023-34-23": [("start", "end"),("start", "end")
 
-    print(selection)
+    #         ],
+    #         "2023-34-21": [("start", "end"),("start", "end")
+    #         ]
+    #     }
+    # }
 
     context = {'selection' : json.dumps(selection)}
     return render(request, 'event/index.html', context)
 
-def form_input(request):
-    if request.method == 'POST':
-        input_loc = request.POST.get('location')
-        input_date = int(request.POST.get('date'))
-        input_start = int(request.POST.get('start'))
-        input_end = int(request.POST.get('end'))
+def getVenueData(request):
+    if request.method == 'GET':
+        venue = request.GET.get('venue')
+        date = request.GET.get('date')
+        time = request.GET.get('time')
+        time = time.split(",")
+        time_start = time[0]
+        time_end = time[1]
 
-        if input_loc:
-            d = datetime.date(2023,6,input_date)
-            dt_start = datetime.time(input_start,0,0)
-            dt_end = datetime.time(input_start,0,0)
-            output_data = venue_event.objects.filter(venue=input_loc,date=d,time_end__gte = dt_start,time_start__lte = dt_end).values()
-            
-            context = {'entries' : output_data}
-            return render(request, 'event\list.html', context)  
+        # result = venue_event.objects.filter(venue=venue, date=date)
+        result = venue_event.objects.filter(venue=venue, date=date, 
+            time_start=time_start, time_end=time_end)
+
+        data = serializers.serialize('json', result)
+        return JsonResponse(data, safe=False)
