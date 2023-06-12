@@ -36,14 +36,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <td>Venue</td>
-                        <td>Date</td>
-                        <td>Start</td>
-                        <td>End</td>
-                        <td>Event</td>
-                        <td>Instructor</td>
+                        <td width=10%>Venue</td>
+                        <td width=10%>Date</td>
+                        <td width=10%>Start</td>
+                        <td width=10%>End</td>
+                        <td width=10%>Event</td>
+                        <td width=10%>Instructor</td>
+                        <td width=10%>Avg. Temp</td>
+                        <td width=10%>Avg. Humidity</td>
+                        <td width=10%>Avg. Light</td>
+                        <td width=10%>Avg. Sound</td>
                     </tr>
                 </thead>
+                <br>
                 <tbody id="result">
                 </tbody>
             </table>
@@ -139,16 +144,22 @@
                             time_end = result[i].fields.time_end;
                             event = result[i].fields.event;
                             instructor = result[i].fields.instructor;
+                            temp = result[i].fields.avg_temp;
+                            hum = result[i].fields.avg_hum;
+                            light = result[i].fields.avg_light;
+                            snd = result[i].fields.avg_snd;
 
                             $("#result").append("<tr>");
-
                             $("#result").append(`<td>${venue}</td>`);
                             $("#result").append(`<td>${date}</td>`);
                             $("#result").append(`<td>${time_start}</td>`);
                             $("#result").append(`<td>${time_end}</td>`);
                             $("#result").append(`<td>${event}</td>`);
                             $("#result").append(`<td>${instructor}</td>`);
-
+                            $("#result").append(`<td>${temp} C</td>`);
+                            $("#result").append(`<td>${hum} %</td>`);
+                            $("#result").append(`<td>${light} lm</td>`);
+                            $("#result").append(`<td>${snd} dB</td>`);
                             $("#result").append("</tr>");
                         }
                     },

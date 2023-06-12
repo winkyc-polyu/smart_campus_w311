@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import venue_event
+from sensor.models import Sensor
 import os
 import json
 from django.conf import settings
@@ -7,6 +8,7 @@ import pandas as pd
 import datetime
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
+from django.db.models import Avg
 
 #pip install django-import-export
 
@@ -45,6 +47,8 @@ def index(request):
             selection[venue][date] = []
             selection[venue][date].append(time)
 
+    
+
     # selection = {
     #     "W311a": {
     #         "2023-34-23": [("start", "end"),("start", "end")
@@ -80,3 +84,8 @@ def getVenueData(request):
 
         data = serializers.serialize('json', result)
         return JsonResponse(data, safe=False)
+
+def temp_info(request):
+    info = venue_event.objects.all().annotate(avg_temp=Avg('temp'),)
+    context = {'info' : info}
+    return render(request, 'event.html', context)
