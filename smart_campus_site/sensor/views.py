@@ -7,7 +7,8 @@ from . import sensor_mqtt
 
 
 def index(request):
-    return render(request, 'sensor/index.html')
+    context = {'nav_class' : 'nav_sensor'}
+    return render(request, 'sensor/index.html', context)
 
     
 def temp_data(request):
@@ -20,7 +21,7 @@ def temp_info(request):
         last_updated=Max('date_created'),
         max_temp=Max('temp'), min_temp=Min('temp'), avg_temp=Avg('temp'),
         )
-    context = {'info' : info}
+    context = {'info' : info, 'nav_class' : 'nav_summary'}
     return render(request, 'sensor/temp_info.html', context)
     
 def hum_info(request):
@@ -28,7 +29,7 @@ def hum_info(request):
         last_updated=Max('date_created'),
         max_hum=Max('hum'), min_hum=Min('hum'), avg_hum=Avg('hum')
         )
-    context = {'info' : info}
+    context = {'info' : info, 'nav_class' : 'nav_summary'}
     return render(request, 'sensor/hum_info.html', context)
     
 def light_info(request):
@@ -36,7 +37,7 @@ def light_info(request):
         last_updated=Max('date_created'),
         max_light=Max('light'), min_light=Min('light'), avg_light=Avg('light')
         )
-    context = {'info' : info}
+    context = {'info' : info, 'nav_class' : 'nav_summary'}
     return render(request, 'sensor/light_info.html', context)
     
 def snd_info(request):
@@ -44,5 +45,5 @@ def snd_info(request):
         last_updated=Max('date_created'),
         max_snd=Max('snd'), min_snd=Min('snd'), avg_snd=Avg('snd'),
         )
-    context = {'info' : info}
+    context = {'info' : info, 'nav_class' : 'nav_summary'}
     return render(request, 'sensor/snd_info.html', context)

@@ -47,7 +47,7 @@ def index(request):
             selection[venue][date] = []
             selection[venue][date].append(time)
 
-    context = {"selection" : json.dumps(selection)}
+    context = {"selection" : json.dumps(selection), "nav_class" : "nav_event"}
     return render(request, "event/index.html", context)
 
 def getVenueData(request):

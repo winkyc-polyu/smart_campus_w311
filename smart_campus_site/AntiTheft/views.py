@@ -10,7 +10,7 @@ def index(request):
     onoff = OnOff.objects.values('state').order_by('-date_ordered').first()['state']
     Breaking = BreakEvent.objects.values('Break').order_by('-date_ordered').first()['Break']
 
-    context = {'onoff': onoff, 'Breaking':Breaking}
+    context = {'onoff': onoff, 'Breaking':Breaking, 'nav_class':'nav_anti_theft'}
     mqtt_payload = {"state": onoff}
     mqtt_topic = "OnOFF"
     # Publish message to MQTT broker
