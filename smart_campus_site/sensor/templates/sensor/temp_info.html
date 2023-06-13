@@ -25,9 +25,9 @@
                 <tr>
                     <th width="10%">Sensor ID</th>
                     <th width="15%">Location</th>
-                    <th width="20%">MAX. Temperature</th>
-                    <th width="20%">MIN. Temperature</th>
-                    <th width="15%">AVG. Temperature</th>
+                    <th width="20%">MAX. (&deg;C)</th>
+                    <th width="20%">MIN. (&deg;C)</th>
+                    <th width="15%">AVG. (&deg;C)</th>
                     <th width="20%">Last Updated</th>
                 </tr>
 
@@ -44,7 +44,8 @@
                                 {% else %}
                         <td>
                             {% endif %}
-                            {{ i.max_temp }}</td>
+                            {{ i.max_temp }}
+                        </td>
 
                         {% if i.min_temp > '29' %}
                         <td style="color: red;">
@@ -52,7 +53,8 @@
                                 {% else %}
                         <td>
                             {% endif %}
-                            {{ i.min_temp }}</td>
+                            {{ i.min_temp }}
+                        </td>
 
                         {% if i.avg_temp > '29' %}
                         <td style="color: red;">
@@ -60,7 +62,8 @@
                                 {% else %}
                         <td>
                             {% endif %}
-                            {{ i.avg_temp|floatformat:2 }}</td>
+                            {{ i.avg_temp|floatformat:2 }}
+                        </td>
 
                         <td>{{ i.last_updated }}</td>
 
