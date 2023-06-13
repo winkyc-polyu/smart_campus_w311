@@ -81,6 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        
     }
 }
 
@@ -127,3 +128,31 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.office365.com'
+EMAIL_PORT= 587
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = '22099397d@connect.polyu.hk'
+EMAIL_HOST_PASSWORD = 'Fcy2004530'
+DEFAULT_FROM_EMAIL='22099397d@connect.polyu.hk'
+ADMINS=[('admin1','henry.yk.chan@polyu.edu.hk'),('admin2',"cinine.fan@gmail.com")]
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
