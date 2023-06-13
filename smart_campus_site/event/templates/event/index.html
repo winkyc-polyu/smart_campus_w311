@@ -9,7 +9,7 @@
     <div style="background-color: #666666; height: 60px;">
         <div class="container">
             {% include "navigation/navbar.html" %}
-            <div style="height: 50px;"></div>
+            <div style="height: 100px;"></div>
 
             <div class="row">
                 <div class="col">
@@ -18,12 +18,12 @@
                             {% csrf_token %}
                             <fieldset>
                                 <legend>Get Venue Data</legend>
-                                <div class="mb-3">
+                                <div class="mb-5">
                                     <label for="venue" class="form-label">Venue</label>
                                     <select id="venue" class="form-select" required>
                                     </select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-5">
                                     <label for="date" class="form-label">Date</label>
                                     <select id="date" class="form-select" required>
                                     </select>
@@ -44,9 +44,9 @@
                         <div class="col">
                             <div class="card" style="width: 22rem;">
                                 {% load static %}
-                                <img id="result_venue_img" src="{% static 'images/W311a.jpg' %}" class="card-img-top" alt="...">
+                                <img id="result_venue_img" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h1 id="result_venue" class="text-center">Title</h1>
+                                    <h1 id="result_venue" class="text-center"></h1>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 <li id="result_date" class="list-group-item"></li>
                                 <li id="result_time" class="list-group-item"></li>
                                 <li class="list-group-item">
-                                    <button type="button" class="btn btn-info" style="width: 100%;"
+                                    <button type="button" class="btn btn-primary" style="width: 100%;"
                                         data-bs-toggle="collapse" data-bs-target="#collapseEnv" aria-expanded="false"
                                         aria-controls="collapseEnv">Environmental Data</button>
                                 </li>
@@ -79,17 +79,18 @@
 
         {% include "navigation/footer.html" %}
         <script>
-            $(document).ready(function () {
 
-                var images = {
-                    "W311-H1": "{% static 'images/W311-H1.jpg' %}",
-                    "W311-H2": "{% static 'images/W311-H2.jpg' %}",
-                    "W311-H3": "{% static 'images/W311-H3.jpg' %}",
-                    "W311a": "{% static 'images/W311a.jpg' %}",
-                    "W311b": "{% static 'images/W311b.jpg' %}",
-                    "W311d-Z1": "{% static 'images/W311d-Z1.jpg' %}",
-                    "W311d-Z2": "{% static 'images/W311d-Z2.jpg' %}"
-                }
+            var images = {
+                "W311-H1": "{% static 'images/W311-H1.jpg' %}",
+                "W311-H2": "{% static 'images/W311-H2.jpg' %}",
+                "W311-H3": "{% static 'images/W311-H3.jpg' %}",
+                "W311a": "{% static 'images/W311a.jpg' %}",
+                "W311b": "{% static 'images/W311b.jpg' %}",
+                "W311d-Z1": "{% static 'images/W311d-Z1.jpg' %}",
+                "W311d-Z2": "{% static 'images/W311d-Z2.jpg' %}"
+            }
+
+            $(document).ready(function () {
 
                 $("#result").hide();
 
@@ -112,7 +113,7 @@
 
                 for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
                     t = selection[venue_selected][date_selected][i]
-                    $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                    $("#time").append(`<option value="${t}">${convertTime(t[0], t[1])}</option>`);
                 }
 
                 $("#venue").on("change", function (e) {
@@ -129,7 +130,7 @@
 
                     for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
                         t = selection[venue_selected][date_selected][i]
-                        $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                        $("#time").append(`<option value="${t}">${convertTime(t[0], t[1])}</option>`);
                     }
                 });
 
@@ -140,21 +141,40 @@
                     $("#time").empty();
                     for (let i = 0; i < selection[venue_selected][date_selected].length; i++) {
                         t = selection[venue_selected][date_selected][i]
-                        $("#time").append(`<option value="${t}">${convertTime(t)}</option>`);
+                        $("#time").append(`<option value="${t}">${convertTime(t[0], t[1])}</option>`);
                     }
                 });
 
                 $('#get-venue-data-form').on('submit', function (event) {
                     event.preventDefault();
-                    getVenueData(images);
+                    getVenueData();
                 });
             });
 
-            function convertTime(arr) {
-                return arr[0] + " - " + arr[1];
+            function convertTime(start_time, end_time) {
+                start_time = start_time.split(":");
+                end_time = end_time.split(":");
+
+                start_time_hour = start_time[0];
+                end_time_hour = end_time[0];
+
+                start_time_min = start_time[1];
+                end_time_min = end_time[1];
+
+                start_time_ampm = start_time_hour >= 12 ? "p.m." : "a.m.";
+                end_time_ampm = end_time_hour >= 12 ? "p.m." : "a.m.";
+
+                start_time_hour = start_time_hour % 12;
+                end_time_hour = end_time_hour % 12;
+
+                start_time_hour = start_time_hour ? start_time_hour : "12";
+                end_time_hour = end_time_hour ? end_time_hour : "12";
+
+                return start_time_hour + ":" + start_time_min + " " + start_time_ampm + " - "
+                    + end_time_hour + ":" + start_time_min + " " + end_time_ampm;
             }
 
-            function getVenueData(images) {
+            function getVenueData() {
                 $.ajax({
                     url: "getVenueData",
                     type: "GET",
@@ -167,7 +187,6 @@
                     success: function (json) {
                         let result = JSON.parse(json);
 
-                        // for (let i = 0; i < result.length; i++) {
                         venue = result[0].fields.venue;
                         date = result[0].fields.date;
                         time_start = result[0].fields.time_start;
@@ -180,35 +199,16 @@
                         light = result[0].fields.avg_light;
                         snd = result[0].fields.avg_snd;
 
-                        if (temp === undefined) {
-                            temp = "No record";
-                        } else {
-                            temp = parseFloat(temp).toFixed(2) + "&deg;C";
-                        }
-
-                        if (hum === undefined) {
-                            hum = "No record";
-                        } else {
-                            hum = parseFloat(hum).toFixed(2) + "%";
-                        }
-
-                        if (light === undefined) {
-                            light = "No record";
-                        } else {
-                            light = parseFloat(light).toFixed(2) + "%";
-                        }
-
-                        if (snd === undefined) {
-                            snd = "No record";
-                        } else {
-                            snd = parseFloat(snd).toFixed(2) + "dB";
-                        }
+                        temp = temp === undefined ? "No record" : parseFloat(temp).toFixed(2) + "&deg;C";
+                        hum = hum === undefined ? "No record" : parseFloat(hum).toFixed(2) + "%";
+                        light = light === undefined ? "No record" : parseFloat(light).toFixed(2) + "%";
+                        snd = snd === undefined ? "No record" : parseFloat(snd).toFixed(2) + "dB";
 
                         $("#result_venue").html(venue);
                         $("#result_event").html(`Event: ${event}`);
                         $("#result_instructor").html(`Instructor: ${instructor}`);
                         $("#result_date").html(`Date: ${date}`);
-                        $("#result_time").html(`Time: ${time_start} - ${time_end}`);
+                        $("#result_time").html(`Time: ${convertTime(time_start, time_end)}`);
 
                         $("#result_temp_avg").html(`<span class="fa-solid fa-temperature-half" aria-hidden="true"></span> ${temp}`);
                         $("#result_hum_avg").html(`<span class="fa-solid fa-droplet" aria-hidden="true"></span> ${hum}`);
@@ -216,7 +216,7 @@
                         $("#result_snd_avg").html(`<span class="fa-solid fa-volume-low" aria-hidden="true"></span> ${snd}`);
 
                         $("#result_venue_img").attr("src", images[venue]);
-                        // }
+
                         $("#result").show();
                     },
 

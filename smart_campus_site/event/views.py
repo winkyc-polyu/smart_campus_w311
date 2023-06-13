@@ -6,8 +6,7 @@ import os
 import json
 from django.conf import settings
 import pandas as pd
-import datetime
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.core import serializers
 from django.db.models import Avg
 from django.utils import dateparse
@@ -60,7 +59,6 @@ def getVenueData(request):
         time_start = time[0]
         time_end = time[1]
 
-        # result = venue_event.objects.filter(venue=venue, date=date)
         result = venue_event.objects.filter(venue=venue, date=date, 
             time_start=time_start, time_end=time_end)
 
