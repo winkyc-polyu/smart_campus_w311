@@ -12,7 +12,9 @@ def index(request):
 
     
 def temp_data(request):
-    sensors = Sensor.objects.all()
+    LIMITED = 500
+    sensors = Sensor.objects.all().order_by('-date_created')[:LIMITED][::-1]
+
     data = serializers.serialize('json', sensors)
     return JsonResponse(data, safe=False)
 
