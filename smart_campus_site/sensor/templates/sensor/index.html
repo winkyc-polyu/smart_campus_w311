@@ -26,6 +26,13 @@
         function processData(dataset) {
             var result = []
             dataset = JSON.parse(dataset);
+            dataset.forEach(item => {
+                // var test = "dvuivnhuiv.ew";
+                // var output = test.substring(0, test.lastIndexOf('.'));
+                // console.log(output);
+                item.fields.date_created = item.fields.date_created.replace("T", " ").replace("Z", "");
+                console.log(item.fields.date_created);
+            });
             dataset.forEach(item => result.push(item.fields));
             return result;
         }
