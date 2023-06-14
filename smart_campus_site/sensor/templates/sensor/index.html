@@ -53,12 +53,14 @@
                                 "hum": { "caption": "Humidity", "type": "number", "filters": false },
                                 "light": { "caption": "Light", "type": "number", "filters": false },
                                 "snd": { "caption": "Sound", "type": "number", "filters": false },
-                                "date_created": { "caption": "Created Date", "type": "datetime", "filters": false }
+                                "date_created": { "caption": "Created Date", "type": "string", "filters": false }
                             },
                         },
                         slice: {
                             rows: [
-                                { uniqueName: "date_created" },
+                                {
+                                    uniqueName: "date_created",
+                                },
                             ],
                             columns: [
                                 { uniqueName: "node_loc" },
@@ -86,19 +88,12 @@
                                 }
                             ]
                         },
-                        // formats: [
-                        //     {
-                        //         name: "degree",
-                        //         decimalPlaces: 2,
-                        //     }
-                        // ],
                         conditions: [
                         ],
                         options: {
                             viewType: "charts",
                             showAggregationLabels: false,
                             chart: {
-
                                 title: "IoT Sensor Dashboard",
                                 type: "line",
                             },
