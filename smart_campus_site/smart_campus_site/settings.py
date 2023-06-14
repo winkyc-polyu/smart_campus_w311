@@ -138,7 +138,7 @@ EMAIL_HOST_USER = '22099397d@connect.polyu.hk'
 EMAIL_HOST_PASSWORD = 'Fcy2004530'
 DEFAULT_FROM_EMAIL='22099397d@connect.polyu.hk'
 # ADMINS=[('admin1','henry.yk.chan@polyu.edu.hk'),('admin2',"cinine.fan@gmail.com")]
-ADMINS=[('admin1','22099397d@connect.polyu.hk'),('admin2',"cinine.fan@gmail.com")]
+ADMINS=[('admin2',"cinine.fan@gmail.com")]
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
